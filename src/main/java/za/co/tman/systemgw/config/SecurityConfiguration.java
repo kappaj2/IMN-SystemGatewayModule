@@ -1,7 +1,6 @@
 package za.co.tman.systemgw.config;
 
-import za.co.tman.systemgw.security.*;
-import za.co.tman.systemgw.security.jwt.*;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import javax.annotation.PostConstruct;
+import za.co.tman.systemgw.security.AuthoritiesConstants;
+import za.co.tman.systemgw.security.jwt.JWTConfigurer;
+import za.co.tman.systemgw.security.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -107,6 +108,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/**").authenticated()
+            .antMatchers("/api/test/**").permitAll()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)

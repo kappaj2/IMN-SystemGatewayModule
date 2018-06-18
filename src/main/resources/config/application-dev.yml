@@ -16,8 +16,10 @@
 logging:
     level:
         ROOT: DEBUG
+        za.co.ajk.systemgateway: DEBUG
         io.github.jhipster: DEBUG
-        za.co.tman.systemgw: DEBUG
+        io.grpc.netty: ERROR
+        com.google.cloud.pubsub.v1: ERROR
 
 eureka:
     instance:
@@ -61,8 +63,8 @@ spring:
     liquibase:
         contexts: dev
     mail:
-        host: localhost
-        port: 25
+        host: smtp.gmail.com
+        port: 587
         username:
         password:
     messages:
