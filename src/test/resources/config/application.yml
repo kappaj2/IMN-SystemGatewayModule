@@ -58,7 +58,7 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
-        
+
 
 server:
     port: 10344
@@ -111,3 +111,144 @@ jhipster:
 # ===================================================================
 
 # application:
+
+application:
+    restTemplateConfig:
+        readTimeout: 350
+        connectTimeout: 550
+#
+#
+# This is the configuration that will determine how the Google Topics as configured and to which topics certain message types are send.
+# Each module can handle the message type differently. The module can send the message to a list of topics.
+# TopicsRequired - the System gateway uses this to check that all the Topics are existing. If a topic is missing, it will create it.
+# modules: This determines what topics list a message type must be send to.
+#
+pubsubmessagetype:
+    modules:
+        -
+            application_module_name: billingmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: billingmodule
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: incidentmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: incidentmodule
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: integrationmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: integrationmodule
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: inventorymodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: inventorymodule
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: loggingmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: notificationmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: systemgateway
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: systemgateway
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: workflowmodule
+            pub_sub_message_type: GenericMessage
+            topics_list: GenericTopic
+        -
+            application_module_name: workflowmodule
+            pub_sub_message_type: LoggingMessage
+            topics_list: LoggingTopic
+        -
+            application_module_name: systemgateway
+            pub_sub_message_type: IncidentMessage
+            topics_list: IncidentTopic
+    topics_required:
+        topic_names: TestTopic, BillingTopic, GenericTopic, IncidentTopic, IntegrationTopic, InventoryTopic, LoggingTopic, NotificationTopic, SystemGatewayTopic, WorkflowTopic
+    subscriptions:
+        -
+            application_module_name: billingmodule
+            topic_name: BillingTopic
+            subscription_name: BillingTopicSub
+        -
+            application_module_name: incidentmodule
+            topic_name: IncidentTopic
+            subscription_name: IncidentTopicSub
+        -
+            application_module_name: integrationmodule
+            topic_name: IntegrationTopic
+            subscription_name: IntegrationTopicSub
+        -
+            application_module_name: inventorymodule
+            topic_name: InventoryTopic
+            subscription_name: InventoryTopicSub
+        -
+            application_module_name: loggingmodule
+            topic_name: LoggingTopic
+            subscription_name: LoggingTopicSub
+        -
+            application_module_name: notificationmodule
+            topic_name: NotificationTopic
+            subscription_name: NotificationTopicSub
+        -
+            application_module_name: systemgateway
+            topic_name: SystemGatewayTopic
+            subscription_name: SystemGatewayTopicSub
+        -
+            application_module_name: workflowmodule
+            topic_name: WorkflowTopic
+            subscription_name: WorkflowTopicSub
+        -
+            application_module_name: billingmodule
+            topic_name: GenericTopic
+            subscription_name: BillingGenericSub
+        -
+            application_module_name: incidentmodule
+            topic_name: GenericTopic
+            subscription_name: IncidentGenericSub
+        -
+            application_module_name: integrationmodule
+            topic_name: GenericTopic
+            subscription_name: IntegrationGenericSub
+        -
+            application_module_name: inventorymodule
+            topic_name: GenericTopic
+            subscription_name: InventoryGenericSub
+        -
+            application_module_name: loggingmodule
+            topic_name: GenericTopic
+            subscription_name: LoggingGenericSub
+        -
+            application_module_name: notificationmodule
+            topic_name: GenericTopic
+            subscription_name: NotificationGenericSub
+        -
+            application_module_name: systemgateway
+            topic_name: GenericTopic
+            subscription_name: SystemGatewayGenericSub
+        -
+            application_module_name: workflowmodule
+            topic_name: GenericTopic
+            subscription_name: WorkflowGenericSub

@@ -14,7 +14,7 @@ import za.co.tman.systemgw.enums.PubSubMessageType;
 import za.co.tman.systemgw.messaging.InterModulePubSubMessage;
 import za.co.tman.systemgw.messaging.MessageImplementationCondition;
 import za.co.tman.systemgw.messaging.MessageSender;
-import za.co.tman.systemgw.messaging.googlepubsub.GoogleChannelManager;
+import za.co.tman.systemgw.messaging.googlepubsub.GooglePubSubHandler;
 
 
 /**
@@ -24,7 +24,7 @@ import za.co.tman.systemgw.messaging.googlepubsub.GoogleChannelManager;
 @Conditional(MessageImplementationCondition.class)
 public class MessageSenderImpl implements MessageSender {
     
-    private GoogleChannelManager googleChannelManager;
+    private GooglePubSubHandler googlePubSubHandler;
     
     @Value("${spring.application.name}")
     private String moduleName;
@@ -32,12 +32,13 @@ public class MessageSenderImpl implements MessageSender {
     @Autowired
     private ObjectMapper objectMapper;
     
-    public MessageSenderImpl(GoogleChannelManager googleChannelManager) {
-        this.googleChannelManager = googleChannelManager;
+    public MessageSenderImpl(GooglePubSubHandler googlePubSubHandler) {
+        this.googlePubSubHandler = googlePubSubHandler;
     }
     
     /**
      * This is a test message that will be submitted.
+     *
      * @throws Exception
      */
     @Override
@@ -56,14 +57,14 @@ public class MessageSenderImpl implements MessageSender {
         interModulePubSubMessage.setOriginatingApplicationModuleName("TestModule");
         interModulePubSubMessage.setPubSubMessageType(PubSubMessageType.INCIDENT);
         
-        googleChannelManager.pubSubMessageSender(interModulePubSubMessage);
+        googlePubSubHandler.publishMessage(interModulePubSubMessage);
     }
     
     @Override
-    public void sendGenericMessage() throws Exception{
-    
+    public void sendGenericMessage() throws Exception {
+        
         InterModulePubSubMessage interModulePubSubMessage = new InterModulePubSubMessage();
-    
+        
         interModulePubSubMessage.setEventType(EventType.GENERIC_MESSAGE);
         interModulePubSubMessage
             .setIncidentDescription("Generic message to test communications");
@@ -74,11 +75,12 @@ public class MessageSenderImpl implements MessageSender {
         interModulePubSubMessage.setOperatorName("Andre");
         interModulePubSubMessage.setOriginatingApplicationModuleName(moduleName);
         interModulePubSubMessage.setPubSubMessageType(PubSubMessageType.GENERIC);
-    
-        googleChannelManager.pubSubMessageSender(interModulePubSubMessage);
+        
+        googlePubSubHandler.publishMessage(interModulePubSubMessage);
     }
+    
     @Override
     public void sendObjMessage(InterModulePubSubMessage interModulePubSubMessage) {
-        googleChannelManager.pubSubMessageSender(interModulePubSubMessage);
+        googlePubSubHandler.publishMessage(interModulePubSubMessage);
     }
 }

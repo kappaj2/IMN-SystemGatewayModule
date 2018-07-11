@@ -4,13 +4,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import za.co.tman.systemgw.enums.enumwrappers.IncidentPriorityDeserializer;
+import za.co.tman.systemgw.enums.enumwrappers.IncidentPrioritySerializer;
 
 
 /**
  * Enum to be used when creating the incident.
  */
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@JsonDeserialize(using = IncidentPriorityDeserializer.class)
+@JsonSerialize(using = IncidentPrioritySerializer.class)
 public enum IncidentPriority {
     
     CRITICAL("Critical", "Critical Priority"),

@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import za.co.tman.systemgw.enums.enumwrappers.EventTypeDeserializer;
+import za.co.tman.systemgw.enums.enumwrappers.EventTypeSerializer;
 
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@JsonDeserialize(using = EventTypeDeserializer.class)
+@JsonSerialize(using = EventTypeSerializer.class)
 public enum EventType {
     
     START_EVENT("START", "Start a new event"),
